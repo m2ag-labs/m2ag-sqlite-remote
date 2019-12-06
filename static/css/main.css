@@ -1,0 +1,11 @@
+#editor {
+    border: 1px solid lightgray;
+    height: 100px;
+    width: 100%;
+    margin: auto;
+}
+
+#query_action, #clear_query_action{
+    margin: 10px auto auto;
+    width: 100%
+}
