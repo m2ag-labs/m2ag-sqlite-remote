@@ -34,5 +34,6 @@ It is not recommended that this app be left running on your device.
  To start:
   
     python3 api <db.file> 
+    Browse to <device>:5000 to access ui. 
 
 To exit -- CTRL-C. 
