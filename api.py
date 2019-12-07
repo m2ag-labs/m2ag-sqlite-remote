@@ -71,7 +71,7 @@ def query():
     #    abort(401)
     sql = request.form['query']
     # does sql contain select?
-    if sql.find('SELECT') & sql.find('select'):
+    if sql.upper().find('SELECT'):
         return not_select(sql)
     else:
         return select(sql)
