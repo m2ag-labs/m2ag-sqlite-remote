@@ -1,12 +1,12 @@
 
 [Unit]
-Description=m2ag.labs device api
+Description=m2ag.labs sqlite remote
 After=network.target
 
 [Service]
 User=pi
 WorkingDirectory=/home/pi/m2ag-sqlite-remote
-ExecStart=python3 api.py
+ExecStart=python3 api.py sqlite-remote.sqlite
 Restart=always
 
 [Install]

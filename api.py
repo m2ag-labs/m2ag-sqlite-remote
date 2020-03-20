@@ -50,7 +50,6 @@ app = Flask(__name__)
 
 def connect_db():
     """Connects to the specific database."""
-    # rv = sqlite3.connect(os.path.join(app.root_path, db_name))
     rv = sqlite3.connect(db_uri, uri=True)
     rv.row_factory = sqlite3.Row
     return rv
