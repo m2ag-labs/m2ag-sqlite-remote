@@ -48,15 +48,20 @@ function get_query() {
         "timeout": 0,
         "headers": {
             "Content-Type": "application/json",
-            "Authorization": "Basic " + btoa("marc" + ":" + "H*11ypa55")
+            "Authorization": "Basic " + btoa(document.getElementById('connect_name').value + ":" + document.getElementById('connect_password').value)
         },
         "data": JSON.stringify({'query': query})
 
     };
 
-    $.ajax(settings).done(function (response) {
+    $.ajax(settings).done((response) => {
         generate_table(response.data);
-    });
+    }).fail((xhr, status, error)=>{
+       // console.log(status);
+        if(xhr.status === 401){
+            alert('received unauthorized error -- please check login info');
+        }
+    })
     
 
 }

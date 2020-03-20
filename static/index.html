@@ -23,10 +23,14 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto m-1">
+            <li class="nav-link" data-target="#connectModal" data-toggle="modal">
+                connect
+            </li>
             <li class="nav-item active">
-                <a class="nav-link" target="_new" href="https://m2aglabs.com">m2ag.labs<span class="sr-only">(current)</span></a>
+                <a class="nav-link" target="_new" href="https://m2aglabs.com">m2ag.labs<span
+                        class="sr-only">(current)</span></a>
             </li>
             <!--<li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
@@ -97,7 +101,46 @@
     </div> <!-- row -->
 
 </div> <!-- container -->
+<div class="modal" id="connectModal" role="dialog" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">connection settings</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">
+                        <ul class="list-group text-left">
+                            <li class="list-group-item  text-center" id="connect_info_display">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="connect_name">user id</label>
+                                        <input class="form-control" id="connect_name" type="text" value="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="connect_password">password</label>
+                                        <input class="form-control" id="connect_password"
+                                               type="password" value="">
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
 
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+               <!-- <button class="btn btn-primary" type="button">save changes</button>-->
+                <button class="btn btn-secondary" data-dismiss="modal" type="button">close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Optional JavaScript -->
 
