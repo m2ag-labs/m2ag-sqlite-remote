@@ -91,7 +91,7 @@ def query():
     s = json.loads(request.data.decode("utf-8"))
     sql = s['query']
     # does sql contain select?
-    if sql.find('SELECT') & sql.find('select'):
+    if sql.upper().find('SELECT'):
         return not_select(sql)
     else:
         return select(sql)
