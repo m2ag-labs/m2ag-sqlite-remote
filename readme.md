@@ -1,13 +1,16 @@
 sqlite.remote
 
-A Python based web service to allow remote access to an sqlite table.
+A Python based web service to allow remote access to an sqlite table. This tool is
+intended to be used for light duty access of sqlite databases used in IoT devices
+for logs and configuration.
 
 Requirements: 
 
     Python 3
     Flask
     
-    Should work on any system the supports Python 3. 
+    Should work on any system the supports Python 3. The latest version of Raspian Buster
+    has all the requirements installed.
     
 
 To install:

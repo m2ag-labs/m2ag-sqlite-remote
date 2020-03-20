@@ -1,13 +1,38 @@
 #!/usr/bin/env python3
 
-import sys
+import json
 import sqlite3
-from flask import Flask, g, jsonify, request, send_from_directory
+import sys
 from urllib.request import pathname2url
 
-if len(sys.argv) == 1:
-    print('Please pass full path to the db file')
-    exit(-1)
+from flask import Flask, request, jsonify, g, send_from_directory, abort
+from flask_httpauth import HTTPBasicAuth
+from werkzeug.security import check_password_hash, generate_password_hash
+
+# initialization
+app = Flask(__name__)
+auth = HTTPBasicAuth()
+
+
+@auth.verify_password
+def verify_password(username, password):
+    if username != "":
+        sql = "SELECT * FROM users WHERE name ='" + username + "'"
+        ret = select(sql)
+        if username in ret.json['data'][0]['name']:
+            return check_password_hash(ret.json['data'][0]['password'], password)
+
+    abort(401)
+    return False
+
+
+# END AUTH and user stuff
+
+def connect_to_db(name):
+    if len(sys.argv) == 1:
+        print('Please pass full path to the db file')
+        exit(-1)
+
 
 db_name = sys.argv[1]
 db_uri = 'file:{}?mode=rw'.format(pathname2url(db_name))
@@ -47,29 +72,24 @@ def close_db(error):
         g.sqlite_db.close()
 
 
-# The next three routes are for serving the app
-
+# The next two routes are for serving the app
 @app.route('/')
-def root():
-    return app.send_static_file('index.html')
+def fwd_root():
+    return root('index.html')
 
 
-@app.route('/js/<path:path>')
-def send_js(path):
-    return send_from_directory('static/js', path)
+@app.route('/<path:path>')
+def root(path):
+    return send_from_directory('static', path)
 
 
-@app.route('/css/<path:path>')
-def send_css(path):
-    return send_from_directory('static/css', path)
-
-
+# the query is here
 @app.route('/query', methods=['POST'])
+@auth.login_required
 def query():
-    # TODO: add login
-    # if not session.get('logged_in'):
-    #    abort(401)
-    sql = request.form['query']
+    # TODO: wrap this with a try
+    s = json.loads(request.data.decode("utf-8"))
+    sql = s['query']
     # does sql contain select?
     if sql.find('SELECT') & sql.find('select'):
         return not_select(sql)
@@ -119,7 +139,6 @@ def select(sql):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
+    # app.run(host='0.0.0.0', port='5000')
     # to enable ssl -- generate a cert.
-    # app.run(host='0.0.0.0', port='5000', ssl_context=('local.crt', 'device.key'))
-    # app.run(host='0.0.0.0', port='5000', debug='false')
+    app.run(host='0.0.0.0', port='5000', ssl_context=('/home/pi/.certs/server.crt', '/home/pi/.certs/server.key'))

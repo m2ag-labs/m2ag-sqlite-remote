@@ -1,5 +1,4 @@
 const url = `${window.location.protocol}//${window.location.hostname}:5000`;
-//let url = `http://raspib.local:5000`;
 const control_action = $('.control_action');
 const query_table = $("#query_results");
 const editor = ace.edit("editor");
@@ -7,7 +6,7 @@ const editor = ace.edit("editor");
 
 $(function () {
     editor.session.setMode("ace/mode/sql");
-    document.getElementById('editor').style.fontSize='16px';
+    document.getElementById('editor').style.fontSize = '16px';
     set_event_actions();
 });
 
@@ -42,9 +41,30 @@ function get_query() {
 
     const query = editor.getValue();
 
+    const settings = {
+        "url": "https://raspib.local:5000/query ",
+        "method": "POST",
+        "dataType":"json",
+        "timeout": 0,
+        "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Basic " + btoa("marc" + ":" + "H*11ypa55")
+        },
+        "data": JSON.stringify({'query': query})
+
+    };
+
+    $.ajax(settings).done(function (response) {
+        generate_table(response.data);
+    });
+
+
+
+     /*
     $.post(`${url}/query`, {'query': query}, (data) => {
         generate_table(data.data);
     });
+     */
 
 }
 
@@ -68,7 +88,7 @@ function generate_table(data) {
         });
         th += '</tr>';
         document.getElementById('query_head').innerHTML = th;
-        if(data.length > 10) {
+        if (data.length > 10) {
             query_table.bootstrapTable({data: data, search: true, pagination: true});
         } else {
             query_table.bootstrapTable({data: data});
