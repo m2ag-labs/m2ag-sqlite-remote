@@ -140,4 +140,4 @@ def select(sql):
 if __name__ == '__main__':
     # app.run(host='0.0.0.0', port='5000')
     # to enable ssl -- generate a cert.
-    app.run(host='0.0.0.0', port='5000', ssl_context=('/home/pi/.certs/server.crt', '/home/pi/.certs/server.key'))
+    app.run(host='0.0.0.0', port='5001', ssl_context=('/home/pi/.certs/server.crt', '/home/pi/.certs/server.key'))
