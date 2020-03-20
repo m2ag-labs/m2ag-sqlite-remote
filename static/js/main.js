@@ -1,4 +1,4 @@
-const url = `${window.location.protocol}//${window.location.hostname}:5000`;
+const url = `${window.location.protocol}//${window.location.hostname}:${window.location.port}`;
 const control_action = $('.control_action');
 const query_table = $("#query_results");
 const editor = ace.edit("editor");
@@ -42,7 +42,7 @@ function get_query() {
     const query = editor.getValue();
 
     const settings = {
-        "url": "https://raspib.local:5000/query ",
+        "url": `${url}/query`,
         "method": "POST",
         "dataType":"json",
         "timeout": 0,
@@ -57,14 +57,7 @@ function get_query() {
     $.ajax(settings).done(function (response) {
         generate_table(response.data);
     });
-
-
-
-     /*
-    $.post(`${url}/query`, {'query': query}, (data) => {
-        generate_table(data.data);
-    });
-     */
+    
 
 }
 
