@@ -1,7 +1,7 @@
-ace.define("ace/snippets/gobstones",["require","exports","module"], function(require, exports, module) {
-"use strict";
+ace.define("ace/snippets/gobstones", ["require", "exports", "module"], function (require, exports, module) {
+    "use strict";
 
-exports.snippetText = "# scope: gobstones\n\
+    exports.snippetText = "# scope: gobstones\n\
 \n\
 # program\n\
 snippet program\n\
@@ -1706,13 +1706,14 @@ snippet docs (función con parámetros)\n\
 		@TIPO: ${6:...}\n\
 	*/\n\
 ";
-exports.scope = "gobstones";
+    exports.scope = "gobstones";
 
-});                (function() {
-                    ace.require(["ace/snippets/gobstones"], function(m) {
-                        if (typeof module == "object" && typeof exports == "object" && module) {
-                            module.exports = m;
-                        }
-                    });
-                })();
+});
+(function () {
+    ace.require(["ace/snippets/gobstones"], function (m) {
+        if (typeof module == "object" && typeof exports == "object" && module) {
+            module.exports = m;
+        }
+    });
+})();
             

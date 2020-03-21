@@ -21,6 +21,16 @@ function set_event_actions() {
             case 'clear_query_action':
                 clear_query();
                 break;
+            case 'save_password':
+                let pw_1 = document.getElementById("password_1").value;
+                let pw_2 = document.getElementById("password_2").value;
+
+                if(pw_1 !== "" && pw_1 === pw_2){
+                    set_password(document.getElementById("connect_name").value, pw_1);
+                } else {
+                    alert("The password field can not be empty. Both fields must match");
+                }
+                break;
             default:
                 console.log(this.id);
                 break;
@@ -34,6 +44,33 @@ function set_event_actions() {
             get_query();
         }
     });
+}
+
+function set_password(username, password) {
+
+    const user = {username: username, password: password};
+
+    const settings = {
+        "url": `${url}/set_password`,
+        "method": "POST",
+        "dataType":"json",
+        "timeout": 0,
+        "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Basic " + btoa(document.getElementById('connect_name').value + ":" + document.getElementById('connect_password').value)
+        },
+        "data": JSON.stringify({'user': user})
+    };
+
+    $.ajax(settings).done((response) => {
+        generate_table(response.data);
+    }).fail((xhr, status, error)=>{
+       // console.log(status);
+        if(xhr.status === 401){
+            alert('received unauthorized error -- please check credential info');
+        }
+    })
+
 }
 
 
@@ -51,7 +88,6 @@ function get_query() {
             "Authorization": "Basic " + btoa(document.getElementById('connect_name').value + ":" + document.getElementById('connect_password').value)
         },
         "data": JSON.stringify({'query': query})
-
     };
 
     $.ajax(settings).done((response) => {
@@ -59,10 +95,9 @@ function get_query() {
     }).fail((xhr, status, error)=>{
        // console.log(status);
         if(xhr.status === 401){
-            alert('received unauthorized error -- please check login info');
+            alert('received unauthorized error -- please check credential info');
         }
     })
-    
 
 }
 

@@ -1,7 +1,7 @@
-ace.define("ace/snippets/rst",["require","exports","module"], function(require, exports, module) {
-"use strict";
+ace.define("ace/snippets/rst", ["require", "exports", "module"], function (require, exports, module) {
+    "use strict";
 
-exports.snippetText = "# rst\n\
+    exports.snippetText = "# rst\n\
 \n\
 snippet :\n\
 	:${1:field name}: ${2:field body}\n\
@@ -24,13 +24,14 @@ snippet cont:\n\
 	.. contents::\n\
 	\n\
 ";
-exports.scope = "rst";
+    exports.scope = "rst";
 
-});                (function() {
-                    ace.require(["ace/snippets/rst"], function(m) {
-                        if (typeof module == "object" && typeof exports == "object" && module) {
-                            module.exports = m;
-                        }
-                    });
-                })();
+});
+(function () {
+    ace.require(["ace/snippets/rst"], function (m) {
+        if (typeof module == "object" && typeof exports == "object" && module) {
+            module.exports = m;
+        }
+    });
+})();
             

@@ -1,7 +1,7 @@
-ace.define("ace/snippets/markdown",["require","exports","module"], function(require, exports, module) {
-"use strict";
+ace.define("ace/snippets/markdown", ["require", "exports", "module"], function (require, exports, module) {
+    "use strict";
 
-exports.snippetText = "# Markdown\n\
+    exports.snippetText = "# Markdown\n\
 \n\
 # Includes octopress (http://octopress.org/) snippets\n\
 \n\
@@ -90,13 +90,14 @@ snippet pullquote\n\
 	${1:text} {\" ${2:quote} \"} ${3:text}\n\
 	{% endpullquote %}\n\
 ";
-exports.scope = "markdown";
+    exports.scope = "markdown";
 
-});                (function() {
-                    ace.require(["ace/snippets/markdown"], function(m) {
-                        if (typeof module == "object" && typeof exports == "object" && module) {
-                            module.exports = m;
-                        }
-                    });
-                })();
+});
+(function () {
+    ace.require(["ace/snippets/markdown"], function (m) {
+        if (typeof module == "object" && typeof exports == "object" && module) {
+            module.exports = m;
+        }
+    });
+})();
             

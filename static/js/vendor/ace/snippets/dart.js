@@ -1,7 +1,7 @@
-ace.define("ace/snippets/dart",["require","exports","module"], function(require, exports, module) {
-"use strict";
+ace.define("ace/snippets/dart", ["require", "exports", "module"], function (require, exports, module) {
+    "use strict";
 
-exports.snippetText = "snippet lib\n\
+    exports.snippetText = "snippet lib\n\
 	library ${1};\n\
 	${2}\n\
 snippet im\n\
@@ -85,13 +85,14 @@ snippet tryf\n\
 	} finally {\n\
 	}\n\
 ";
-exports.scope = "dart";
+    exports.scope = "dart";
 
-});                (function() {
-                    ace.require(["ace/snippets/dart"], function(m) {
-                        if (typeof module == "object" && typeof exports == "object" && module) {
-                            module.exports = m;
-                        }
-                    });
-                })();
+});
+(function () {
+    ace.require(["ace/snippets/dart"], function (m) {
+        if (typeof module == "object" && typeof exports == "object" && module) {
+            module.exports = m;
+        }
+    });
+})();
             

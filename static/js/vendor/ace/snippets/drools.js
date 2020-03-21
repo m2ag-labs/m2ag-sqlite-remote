@@ -1,7 +1,7 @@
-ace.define("ace/snippets/drools",["require","exports","module"], function(require, exports, module) {
-"use strict";
+ace.define("ace/snippets/drools", ["require", "exports", "module"], function (require, exports, module) {
+    "use strict";
 
-exports.snippetText = "\n\
+    exports.snippetText = "\n\
 snippet rule\n\
 	rule \"${1?:rule_name}\"\n\
 	when\n\
@@ -21,13 +21,14 @@ snippet declare\n\
 	end\n\
 \n\
 ";
-exports.scope = "drools";
+    exports.scope = "drools";
 
-});                (function() {
-                    ace.require(["ace/snippets/drools"], function(m) {
-                        if (typeof module == "object" && typeof exports == "object" && module) {
-                            module.exports = m;
-                        }
-                    });
-                })();
+});
+(function () {
+    ace.require(["ace/snippets/drools"], function (m) {
+        if (typeof module == "object" && typeof exports == "object" && module) {
+            module.exports = m;
+        }
+    });
+})();
             

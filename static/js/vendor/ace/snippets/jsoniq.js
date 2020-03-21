@@ -1,7 +1,7 @@
-ace.define("ace/snippets/jsoniq",["require","exports","module"], function(require, exports, module) {
-"use strict";
+ace.define("ace/snippets/jsoniq", ["require", "exports", "module"], function (require, exports, module) {
+    "use strict";
 
-exports.snippetText = "snippet for\n\
+    exports.snippetText = "snippet for\n\
 	for $${1:item} in ${2:expr}\n\
 snippet return\n\
 	return ${1:expr}\n\
@@ -63,13 +63,14 @@ snippet fn\n\
 snippet module\n\
 	module namespace ${1:ns} = \"${2:http://www.example.com}\";\n\
 ";
-exports.scope = "jsoniq";
+    exports.scope = "jsoniq";
 
-});                (function() {
-                    ace.require(["ace/snippets/jsoniq"], function(m) {
-                        if (typeof module == "object" && typeof exports == "object" && module) {
-                            module.exports = m;
-                        }
-                    });
-                })();
+});
+(function () {
+    ace.require(["ace/snippets/jsoniq"], function (m) {
+        if (typeof module == "object" && typeof exports == "object" && module) {
+            module.exports = m;
+        }
+    });
+})();
             

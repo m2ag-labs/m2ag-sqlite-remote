@@ -1,7 +1,7 @@
-ace.define("ace/snippets/clojure",["require","exports","module"], function(require, exports, module) {
-"use strict";
+ace.define("ace/snippets/clojure", ["require", "exports", "module"], function (require, exports, module) {
+    "use strict";
 
-exports.snippetText = "snippet comm\n\
+    exports.snippetText = "snippet comm\n\
 	(comment\n\
 	  ${1}\n\
 	  )\n\
@@ -92,13 +92,14 @@ snippet when-let\n\
 	(when-let [${1:result} ${2:test}]\n\
 		${3:body})\n\
 ";
-exports.scope = "clojure";
+    exports.scope = "clojure";
 
-});                (function() {
-                    ace.require(["ace/snippets/clojure"], function(m) {
-                        if (typeof module == "object" && typeof exports == "object" && module) {
-                            module.exports = m;
-                        }
-                    });
-                })();
+});
+(function () {
+    ace.require(["ace/snippets/clojure"], function (m) {
+        if (typeof module == "object" && typeof exports == "object" && module) {
+            module.exports = m;
+        }
+    });
+})();
             

@@ -1,4 +1,4 @@
-ace.define("ace/mode/crystal_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function (require, exports, module) {
+ace.define("ace/mode/crystal_highlight_rules", ["require", "exports", "module", "ace/lib/oop", "ace/mode/text_highlight_rules"], function (require, exports, module) {
     "use strict";
 
     var oop = require("../lib/oop");
@@ -399,11 +399,11 @@ ace.define("ace/mode/crystal_highlight_rules",["require","exports","module","ace
                     token: "punctuation.operator",
                     regex: /[.]\s*(?![.])/,
                     push: [{
-                        token : "punctuation.operator",
-                        regex : /[.]\s*(?![.])/
+                        token: "punctuation.operator",
+                        regex: /[.]\s*(?![.])/
                     }, {
-                        token : "support.function",
-                        regex : "[a-zA-Z_$][a-zA-Z0-9_$]*\\b"
+                        token: "support.function",
+                        regex: "[a-zA-Z_$][a-zA-Z0-9_$]*\\b"
                     }, {
                         regex: "",
                         token: "empty",
@@ -436,207 +436,210 @@ ace.define("ace/mode/crystal_highlight_rules",["require","exports","module","ace
     exports.CrystalHighlightRules = CrystalHighlightRules;
 });
 
-ace.define("ace/mode/matching_brace_outdent",["require","exports","module","ace/range"], function(require, exports, module) {
-"use strict";
+ace.define("ace/mode/matching_brace_outdent", ["require", "exports", "module", "ace/range"], function (require, exports, module) {
+    "use strict";
 
-var Range = require("../range").Range;
+    var Range = require("../range").Range;
 
-var MatchingBraceOutdent = function() {};
-
-(function() {
-
-    this.checkOutdent = function(line, input) {
-        if (! /^\s+$/.test(line))
-            return false;
-
-        return /^\s*\}/.test(input);
+    var MatchingBraceOutdent = function () {
     };
 
-    this.autoOutdent = function(doc, row) {
-        var line = doc.getLine(row);
-        var match = line.match(/^(\s*\})/);
+    (function () {
 
-        if (!match) return 0;
+        this.checkOutdent = function (line, input) {
+            if (!/^\s+$/.test(line))
+                return false;
 
-        var column = match[1].length;
-        var openBracePos = doc.findMatchingBracket({row: row, column: column});
+            return /^\s*\}/.test(input);
+        };
 
-        if (!openBracePos || openBracePos.row == row) return 0;
+        this.autoOutdent = function (doc, row) {
+            var line = doc.getLine(row);
+            var match = line.match(/^(\s*\})/);
 
-        var indent = this.$getIndent(doc.getLine(openBracePos.row));
-        doc.replace(new Range(row, 0, row, column-1), indent);
-    };
+            if (!match) return 0;
 
-    this.$getIndent = function(line) {
-        return line.match(/^\s*/)[0];
-    };
+            var column = match[1].length;
+            var openBracePos = doc.findMatchingBracket({row: row, column: column});
 
-}).call(MatchingBraceOutdent.prototype);
+            if (!openBracePos || openBracePos.row == row) return 0;
 
-exports.MatchingBraceOutdent = MatchingBraceOutdent;
+            var indent = this.$getIndent(doc.getLine(openBracePos.row));
+            doc.replace(new Range(row, 0, row, column - 1), indent);
+        };
+
+        this.$getIndent = function (line) {
+            return line.match(/^\s*/)[0];
+        };
+
+    }).call(MatchingBraceOutdent.prototype);
+
+    exports.MatchingBraceOutdent = MatchingBraceOutdent;
 });
 
-ace.define("ace/mode/folding/coffee",["require","exports","module","ace/lib/oop","ace/mode/folding/fold_mode","ace/range"], function(require, exports, module) {
-"use strict";
+ace.define("ace/mode/folding/coffee", ["require", "exports", "module", "ace/lib/oop", "ace/mode/folding/fold_mode", "ace/range"], function (require, exports, module) {
+    "use strict";
 
-var oop = require("../../lib/oop");
-var BaseFoldMode = require("./fold_mode").FoldMode;
-var Range = require("../../range").Range;
+    var oop = require("../../lib/oop");
+    var BaseFoldMode = require("./fold_mode").FoldMode;
+    var Range = require("../../range").Range;
 
-var FoldMode = exports.FoldMode = function() {};
-oop.inherits(FoldMode, BaseFoldMode);
-
-(function() {
-
-    this.getFoldWidgetRange = function(session, foldStyle, row) {
-        var range = this.indentationBlock(session, row);
-        if (range)
-            return range;
-
-        var re = /\S/;
-        var line = session.getLine(row);
-        var startLevel = line.search(re);
-        if (startLevel == -1 || line[startLevel] != "#")
-            return;
-
-        var startColumn = line.length;
-        var maxRow = session.getLength();
-        var startRow = row;
-        var endRow = row;
-
-        while (++row < maxRow) {
-            line = session.getLine(row);
-            var level = line.search(re);
-
-            if (level == -1)
-                continue;
-
-            if (line[level] != "#")
-                break;
-
-            endRow = row;
-        }
-
-        if (endRow > startRow) {
-            var endColumn = session.getLine(endRow).length;
-            return new Range(startRow, startColumn, endRow, endColumn);
-        }
+    var FoldMode = exports.FoldMode = function () {
     };
-    this.getFoldWidget = function(session, foldStyle, row) {
-        var line = session.getLine(row);
-        var indent = line.search(/\S/);
-        var next = session.getLine(row + 1);
-        var prev = session.getLine(row - 1);
-        var prevIndent = prev.search(/\S/);
-        var nextIndent = next.search(/\S/);
+    oop.inherits(FoldMode, BaseFoldMode);
 
-        if (indent == -1) {
-            session.foldWidgets[row - 1] = prevIndent!= -1 && prevIndent < nextIndent ? "start" : "";
-            return "";
-        }
-        if (prevIndent == -1) {
-            if (indent == nextIndent && line[indent] == "#" && next[indent] == "#") {
-                session.foldWidgets[row - 1] = "";
-                session.foldWidgets[row + 1] = "";
-                return "start";
+    (function () {
+
+        this.getFoldWidgetRange = function (session, foldStyle, row) {
+            var range = this.indentationBlock(session, row);
+            if (range)
+                return range;
+
+            var re = /\S/;
+            var line = session.getLine(row);
+            var startLevel = line.search(re);
+            if (startLevel == -1 || line[startLevel] != "#")
+                return;
+
+            var startColumn = line.length;
+            var maxRow = session.getLength();
+            var startRow = row;
+            var endRow = row;
+
+            while (++row < maxRow) {
+                line = session.getLine(row);
+                var level = line.search(re);
+
+                if (level == -1)
+                    continue;
+
+                if (line[level] != "#")
+                    break;
+
+                endRow = row;
             }
-        } else if (prevIndent == indent && line[indent] == "#" && prev[indent] == "#") {
-            if (session.getLine(row - 2).search(/\S/) == -1) {
-                session.foldWidgets[row - 1] = "start";
-                session.foldWidgets[row + 1] = "";
+
+            if (endRow > startRow) {
+                var endColumn = session.getLine(endRow).length;
+                return new Range(startRow, startColumn, endRow, endColumn);
+            }
+        };
+        this.getFoldWidget = function (session, foldStyle, row) {
+            var line = session.getLine(row);
+            var indent = line.search(/\S/);
+            var next = session.getLine(row + 1);
+            var prev = session.getLine(row - 1);
+            var prevIndent = prev.search(/\S/);
+            var nextIndent = next.search(/\S/);
+
+            if (indent == -1) {
+                session.foldWidgets[row - 1] = prevIndent != -1 && prevIndent < nextIndent ? "start" : "";
                 return "";
             }
-        }
+            if (prevIndent == -1) {
+                if (indent == nextIndent && line[indent] == "#" && next[indent] == "#") {
+                    session.foldWidgets[row - 1] = "";
+                    session.foldWidgets[row + 1] = "";
+                    return "start";
+                }
+            } else if (prevIndent == indent && line[indent] == "#" && prev[indent] == "#") {
+                if (session.getLine(row - 2).search(/\S/) == -1) {
+                    session.foldWidgets[row - 1] = "start";
+                    session.foldWidgets[row + 1] = "";
+                    return "";
+                }
+            }
 
-        if (prevIndent!= -1 && prevIndent < indent)
-            session.foldWidgets[row - 1] = "start";
-        else
-            session.foldWidgets[row - 1] = "";
+            if (prevIndent != -1 && prevIndent < indent)
+                session.foldWidgets[row - 1] = "start";
+            else
+                session.foldWidgets[row - 1] = "";
 
-        if (indent < nextIndent)
-            return "start";
-        else
-            return "";
-    };
+            if (indent < nextIndent)
+                return "start";
+            else
+                return "";
+        };
 
-}).call(FoldMode.prototype);
+    }).call(FoldMode.prototype);
 
 });
 
-ace.define("ace/mode/crystal",["require","exports","module","ace/lib/oop","ace/mode/text","ace/mode/crystal_highlight_rules","ace/mode/matching_brace_outdent","ace/range","ace/mode/behaviour/cstyle","ace/mode/folding/coffee"], function(require, exports, module) {
-"use strict";
+ace.define("ace/mode/crystal", ["require", "exports", "module", "ace/lib/oop", "ace/mode/text", "ace/mode/crystal_highlight_rules", "ace/mode/matching_brace_outdent", "ace/range", "ace/mode/behaviour/cstyle", "ace/mode/folding/coffee"], function (require, exports, module) {
+    "use strict";
 
-var oop = require("../lib/oop");
-var TextMode = require("./text").Mode;
-var CrystalHighlightRules = require("./crystal_highlight_rules").CrystalHighlightRules;
-var MatchingBraceOutdent = require("./matching_brace_outdent").MatchingBraceOutdent;
-var Range = require("../range").Range;
-var CstyleBehaviour = require("./behaviour/cstyle").CstyleBehaviour;
-var FoldMode = require("./folding/coffee").FoldMode;
+    var oop = require("../lib/oop");
+    var TextMode = require("./text").Mode;
+    var CrystalHighlightRules = require("./crystal_highlight_rules").CrystalHighlightRules;
+    var MatchingBraceOutdent = require("./matching_brace_outdent").MatchingBraceOutdent;
+    var Range = require("../range").Range;
+    var CstyleBehaviour = require("./behaviour/cstyle").CstyleBehaviour;
+    var FoldMode = require("./folding/coffee").FoldMode;
 
-var Mode = function() {
-    this.HighlightRules = CrystalHighlightRules;
-    this.$outdent = new MatchingBraceOutdent();
-    this.$behaviour = new CstyleBehaviour();
-    this.foldingRules = new FoldMode();
-};
-oop.inherits(Mode, TextMode);
+    var Mode = function () {
+        this.HighlightRules = CrystalHighlightRules;
+        this.$outdent = new MatchingBraceOutdent();
+        this.$behaviour = new CstyleBehaviour();
+        this.foldingRules = new FoldMode();
+    };
+    oop.inherits(Mode, TextMode);
 
-(function() {
+    (function () {
 
 
-    this.lineCommentStart = "#";
+        this.lineCommentStart = "#";
 
-    this.getNextLineIndent = function(state, line, tab) {
-        var indent = this.$getIndent(line);
+        this.getNextLineIndent = function (state, line, tab) {
+            var indent = this.$getIndent(line);
 
-        var tokenizedLine = this.getTokenizer().getLineTokens(line, state);
-        var tokens = tokenizedLine.tokens;
+            var tokenizedLine = this.getTokenizer().getLineTokens(line, state);
+            var tokens = tokenizedLine.tokens;
 
-        if (tokens.length && tokens[tokens.length-1].type == "comment") {
-            return indent;
-        }
-
-        if (state == "start") {
-            var match = line.match(/^.*[\{\(\[]\s*$/);
-            var startingClassOrMethod = line.match(/^\s*(class|def|module)\s.*$/);
-            var startingDoBlock = line.match(/.*do(\s*|\s+\|.*\|\s*)$/);
-            var startingConditional = line.match(/^\s*(if|else|when)\s*/);
-            if (match || startingClassOrMethod || startingDoBlock || startingConditional) {
-                indent += tab;
+            if (tokens.length && tokens[tokens.length - 1].type == "comment") {
+                return indent;
             }
+
+            if (state == "start") {
+                var match = line.match(/^.*[\{\(\[]\s*$/);
+                var startingClassOrMethod = line.match(/^\s*(class|def|module)\s.*$/);
+                var startingDoBlock = line.match(/.*do(\s*|\s+\|.*\|\s*)$/);
+                var startingConditional = line.match(/^\s*(if|else|when)\s*/);
+                if (match || startingClassOrMethod || startingDoBlock || startingConditional) {
+                    indent += tab;
+                }
+            }
+
+            return indent;
+        };
+
+        this.checkOutdent = function (state, line, input) {
+            return /^\s+(end|else)$/.test(line + input) || this.$outdent.checkOutdent(line, input);
+        };
+
+        this.autoOutdent = function (state, session, row) {
+            var line = session.getLine(row);
+            if (/}/.test(line))
+                return this.$outdent.autoOutdent(session, row);
+            var indent = this.$getIndent(line);
+            var prevLine = session.getLine(row - 1);
+            var prevIndent = this.$getIndent(prevLine);
+            var tab = session.getTabString();
+            if (prevIndent.length <= indent.length) {
+                if (indent.slice(-tab.length) == tab)
+                    session.remove(new Range(row, indent.length - tab.length, row, indent.length));
+            }
+        };
+
+        this.$id = "ace/mode/crystal";
+    }).call(Mode.prototype);
+
+    exports.Mode = Mode;
+});
+(function () {
+    ace.require(["ace/mode/crystal"], function (m) {
+        if (typeof module == "object" && typeof exports == "object" && module) {
+            module.exports = m;
         }
-
-        return indent;
-    };
-
-    this.checkOutdent = function(state, line, input) {
-        return /^\s+(end|else)$/.test(line + input) || this.$outdent.checkOutdent(line, input);
-    };
-
-    this.autoOutdent = function(state, session, row) {
-        var line = session.getLine(row);
-        if (/}/.test(line))
-            return this.$outdent.autoOutdent(session, row);
-        var indent = this.$getIndent(line);
-        var prevLine = session.getLine(row - 1);
-        var prevIndent = this.$getIndent(prevLine);
-        var tab = session.getTabString();
-        if (prevIndent.length <= indent.length) {
-            if (indent.slice(-tab.length) == tab)
-                session.remove(new Range(row, indent.length-tab.length, row, indent.length));
-        }
-    };
-
-    this.$id = "ace/mode/crystal";
-}).call(Mode.prototype);
-
-exports.Mode = Mode;
-});                (function() {
-                    ace.require(["ace/mode/crystal"], function(m) {
-                        if (typeof module == "object" && typeof exports == "object" && module) {
-                            module.exports = m;
-                        }
-                    });
-                })();
+    });
+})();
             

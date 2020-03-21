@@ -26,27 +26,19 @@ def verify_password(username, password):
     return False
 
 
+# the query is here
+@app.route('/set_password', methods=['POST'])
+@auth.login_required
+def set_password():
+    # TODO: wrap this with a try -- user name and password are plain text in json
+    s = json.loads(request.data.decode("utf-8"))
+    s = s['user']
+    sql = "UPDATE users SET password = '" + generate_password_hash(s['password']) + "' WHERE name = '" + s[
+        'username'] + "'"
+    return query(sql)
+
+
 # END AUTH and user stuff
-
-def connect_to_db(name):
-    if len(sys.argv) == 1:
-        print('Please pass full path to the db file')
-        exit(-1)
-
-
-db_name = sys.argv[1]
-db_uri = 'file:{}?mode=rw'.format(pathname2url(db_name))
-# check to see if this file exists
-try:
-    conn = sqlite3.connect(db_uri, uri=True)
-    conn.close()
-except sqlite3.OperationalError:
-    print(db_name + ' does not exist')
-    exit(-1)
-    # handle missing database case
-
-app = Flask(__name__)
-
 
 def connect_db():
     """Connects to the specific database."""
@@ -85,10 +77,13 @@ def root(path):
 # the query is here
 @app.route('/query', methods=['POST'])
 @auth.login_required
-def query():
+def query(sq=None):
     # TODO: wrap this with a try
-    s = json.loads(request.data.decode("utf-8"))
-    sql = s['query']
+    if not sq:
+        s = json.loads(request.data.decode("utf-8"))
+        sql = s['query']
+    else:
+        sql = sq
     # does sql contain select?
     if sql.upper().find('SELECT'):
         return not_select(sql)
@@ -138,6 +133,17 @@ def select(sql):
 
 
 if __name__ == '__main__':
+    db_name = sys.argv[1]
+    db_uri = 'file:{}?mode=rw'.format(pathname2url(db_name))
+    # check to see if this file exists
+    try:
+        conn = sqlite3.connect(db_uri, uri=True)
+        conn.close()
+    except sqlite3.OperationalError:
+        print(db_name + ' does not exist')
+        exit(-1)
+        # handle missing database case
+
     # app.run(host='0.0.0.0', port='5000')
     # to enable ssl -- generate a cert.
     app.run(host='0.0.0.0', port='5001', ssl_context=('/home/pi/.certs/server.crt', '/home/pi/.certs/server.key'))

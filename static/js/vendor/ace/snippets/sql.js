@@ -1,7 +1,7 @@
-ace.define("ace/snippets/sql",["require","exports","module"], function(require, exports, module) {
-"use strict";
+ace.define("ace/snippets/sql", ["require", "exports", "module"], function (require, exports, module) {
+    "use strict";
 
-exports.snippetText = "snippet tbl\n\
+    exports.snippetText = "snippet tbl\n\
 	create table ${1:table} (\n\
 		${2:columns}\n\
 	);\n\
@@ -28,13 +28,14 @@ snippet seq\n\
 snippet s*\n\
 	select * from ${1:table}\n\
 ";
-exports.scope = "sql";
+    exports.scope = "sql";
 
-});                (function() {
-                    ace.require(["ace/snippets/sql"], function(m) {
-                        if (typeof module == "object" && typeof exports == "object" && module) {
-                            module.exports = m;
-                        }
-                    });
-                })();
+});
+(function () {
+    ace.require(["ace/snippets/sql"], function (m) {
+        if (typeof module == "object" && typeof exports == "object" && module) {
+            module.exports = m;
+        }
+    });
+})();
             
