@@ -1,4 +1,7 @@
-sqlite.remote
+sqlite.remote v 1.0, March 22, 2020
+
+There is blog post at https://m2aglabs.com/2020/03/22/sqlite-remote-version-1-0/ covering
+latest version of this tool.
 
 A Python based web service to allow remote access to an sqlite table. This tool is
 intended to be used for light duty access of sqlite databases used in IoT devices
@@ -28,15 +31,7 @@ to install dependencies, or install manually.
 
 Usage:
 
-
- To start:
-  
-    python3 api <db.file> 
-    Browse to <device>:5000 to access ui. 
-
-To exit -- CTRL-C. 
-
-
+Please see the blog post at https://m2aglabs.com/2020/03/22/sqlite-remote-version-1-0/
 
 License:
 
