@@ -17,10 +17,11 @@ auth = HTTPBasicAuth()
 @auth.verify_password
 def verify_password(username, password):
     if username != "":
-        sql = "SELECT * FROM users WHERE name ='" + username + "'"
+        sql = "SELECT * FROM users WHERE username ='" + username + "'"
         ret = select(sql)
-        if username in ret.json['data'][0]['name']:
-            return check_password_hash(ret.json['data'][0]['password'], password)
+        if len(ret.json['data']) > 0:
+            if username in ret.json['data'][0]['username']:
+                return check_password_hash(ret.json['data'][0]['password'], password)
 
     abort(401)
     return False
@@ -33,9 +34,9 @@ def set_password():
     # TODO: wrap this with a try -- user name and password are plain text in json
     s = json.loads(request.data.decode("utf-8"))
     s = s['user']
-    sql = "UPDATE users SET password = '" + generate_password_hash(s['password']) + "' WHERE name = '" + s[
+    sql = "UPDATE users SET password = '" + generate_password_hash(s['password']) + "' WHERE username = '" + s[
         'username'] + "'"
-    return query(sql)
+    return not_select(sql)
 
 
 # END AUTH and user stuff
@@ -77,13 +78,10 @@ def root(path):
 # the query is here
 @app.route('/query', methods=['POST'])
 @auth.login_required
-def query(sq=None):
+def query():
     # TODO: wrap this with a try
-    if not sq:
-        s = json.loads(request.data.decode("utf-8"))
-        sql = s['query']
-    else:
-        sql = sq
+    s = json.loads(request.data.decode("utf-8"))
+    sql = s['query']
     # does sql contain select?
     if sql.upper().find('SELECT'):
         return not_select(sql)

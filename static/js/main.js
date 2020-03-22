@@ -22,14 +22,16 @@ function set_event_actions() {
                 clear_query();
                 break;
             case 'save_password':
-                let pw_1 = document.getElementById("password_1").value;
-                let pw_2 = document.getElementById("password_2").value;
-
+                const pw_1 = document.getElementById("password_1").value;
+                const pw_2 = document.getElementById("password_2").value;
                 if(pw_1 !== "" && pw_1 === pw_2){
                     set_password(document.getElementById("connect_name").value, pw_1);
                 } else {
                     alert("The password field can not be empty. Both fields must match");
                 }
+                break;
+            case 'about_link':
+                alert("m2ag.labs sqlite remote version 1.0. Usage info available at m2aglabs.com");
                 break;
             default:
                 console.log(this.id);
@@ -39,7 +41,8 @@ function set_event_actions() {
 
     //shift enter for query
     $('#editor').on('keypress', function (e) {
-        if (e.which === 13 && e.shiftKey) {
+       // if (e.which === 13 && e.shiftKey) {
+        if (e.which === 13) {
             e.preventDefault();
             get_query();
         }
@@ -64,6 +67,7 @@ function set_password(username, password) {
 
     $.ajax(settings).done((response) => {
         generate_table(response.data);
+         document.getElementById('connect_password').value = password;
     }).fail((xhr, status, error)=>{
        // console.log(status);
         if(xhr.status === 401){

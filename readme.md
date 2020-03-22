@@ -8,8 +8,10 @@ Requirements:
 
     Python 3
     Flask
-    
-    Should work on any system the supports Python 3. The latest version of Raspian Buster
+    Flask_HTTPAuth
+    Werkzeug
+
+    This app should work on any system the supports Python 3. The latest version of Raspian Buster
     has all the requirements installed.
     
 
@@ -26,14 +28,6 @@ to install dependencies, or install manually.
 
 Usage:
 
-This app does not implement any type of security. 
-The recommended usage is as follows:
-    
-    1. Start app pointing to desired database
-    2. Perform maintenance
-    3. Shutdown app
-    
-It is not recommended that this app be left running on your device. 
 
  To start:
   
@@ -43,6 +37,7 @@ It is not recommended that this app be left running on your device.
 To exit -- CTRL-C. 
 
 
+
 License:
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -50,6 +45,3 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-The chinook.db sample database is from https://www.sqlitetutorial.net/sqlite-sample-database/
