@@ -33,7 +33,7 @@ Usage:
 
 Please see the blog post at https://m2aglabs.com/2020/03/22/sqlite-remote-version-1-0/
 
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)]("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=7ECSJ6V76DM6Q&amp;source=url")
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=7ECSJ6V76DM6Q&amp;source=url">)
 
 License:
 
