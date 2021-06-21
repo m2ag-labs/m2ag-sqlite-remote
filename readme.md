@@ -1,6 +1,6 @@
 sqlite.remote v 1.0, March 22, 2020
 
-There is blog post at https://m2aglabs.com/2020/03/22/sqlite-remote-version-1-0/ covering
+There is a document [here](https://docs.google.com/document/d/1qks_uXbVdNxOkX6JgCFMinat4QRqYcPyqZqEM2Ep-8M/edit?usp=sharing) covering
 latest version of this tool.
 
 A Python based web service to allow remote access to an sqlite table. This tool is
@@ -31,7 +31,7 @@ to install dependencies, or install manually.
 
 Usage:
 
-Please see the blog post at https://m2aglabs.com/2020/03/22/sqlite-remote-version-1-0/
+Please see this [document](https://docs.google.com/document/d/1qks_uXbVdNxOkX6JgCFMinat4QRqYcPyqZqEM2Ep-8M/edit?usp=sharing) for usage.
 
 License:
 
